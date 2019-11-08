@@ -1,26 +1,23 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import Contacts from "./components/Contacts";
+import Header from "./components/Header";
+import { Provider } from "./context";
+import "materialize-css/dist/css/materialize.min.css";
+import { library } from "@fortawesome/fontawesome-svg-core";
+import { fab } from "@fortawesome/free-brands-svg-icons";
+import { faPlusSquare, faTimes } from "@fortawesome/free-solid-svg-icons";
+
+library.add(fab, faPlusSquare, faTimes);
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    return (
+        <Provider>
+            <div>
+                <Header branding="Contact Manager" />
+                <Contacts />
+            </div>
+        </Provider>
+    );
 }
 
 export default App;
