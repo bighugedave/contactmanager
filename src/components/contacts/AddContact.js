@@ -9,6 +9,10 @@ class AddContact extends Component {
         phone: ''
     }
 
+    onNameChange = (e) => this.setState({name: e.target.value});
+    onEmailChange = (e) => this.setState({email: e.target.value});
+    onPhoneChange = (e) => this.setState({phone: e.target.value});
+
     render() {
 
         const { name, email, phone } = this.state;
@@ -23,17 +27,20 @@ class AddContact extends Component {
                             <form className="container">
                                 <div className="row">
                                     <div className="input-field col s12">
-                                        <input id="name" type="text" placeholder="Name" className="validate white-text" value={name} />
+                                        <input id="name" type="text" placeholder="Name" className="validate white-text" 
+                                        value={name} onChange={this.onNameChange} />
                                     </div>
                                 </div>
                                 <div className="row">
                                     <div className="input-field col s12">
-                                        <input id="email" type="email" placeholder="Email" className="validate white-text" value={email} />
+                                        <input id="email" type="email" placeholder="Email" className="validate white-text" 
+                                        value={email} onChange={this.onEmailChange} />
                                     </div>
                                 </div>
                                 <div className="row">
                                     <div className="input-field col s12">
-                                        <input id="phone" type="text" placeholder="Phone" className="validate white-text" value={phone} />
+                                        <input id="phone" type="text" placeholder="Phone" className="validate white-text" 
+                                        value={phone} onChange={this.onPhoneChange} />
                                     </div>
                                 </div>
                                 <FontAwesomeIcon
