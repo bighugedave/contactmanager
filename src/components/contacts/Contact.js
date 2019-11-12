@@ -28,25 +28,28 @@ class Contact extends Component {
                     return (
                         <div className="row">
                             <div className="col s12 m7 l3">
-                                <div className="card blue darken-4">
+                                <div className="card blue darken-2">
                                     <div className="card-content white-text">
                                         <span className="card-title">
                                             {name}
                                             &nbsp;&nbsp;
                                             <FontAwesomeIcon
+                                                className="fa-xs"
                                                 onClick={this.onShowClick}
-                                                icon="plus-square"
+                                                icon="plus"
                                                 style={{
                                                     cursor: "pointer",
-                                                    color: "lightgray"
+                                                    color: "white"
                                                 }}
                                             />
                                             <FontAwesomeIcon
                                                 icon="times"
+                                                className="fa-sm"
                                                 style={{
                                                     cursor: "pointer",
-                                                    color: "lightgray",
-                                                    float: "right"
+                                                    color: "white",
+                                                    float: "right",
+                                                    marginTop: "10px"
                                                 }}
                                                 onClick={this.onDeleteClick.bind(
                                                     this,

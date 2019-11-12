@@ -1,57 +1,114 @@
-import React, { Component } from 'react'
+import React, { Component } from "react";
+import { Consumer } from "../../context";
+import TextInputGroup from "../layout/TextInputGroup";
+
+import uuid from "uuid";
 
 class AddContact extends Component {
-
     state = {
-        name: '',
-        email: '',
-        phone: ''
-    }
+        name: "",
+        email: "",
+        phone: "",
+        errors: {}
+    };
 
-    onChange = (e) => this.setState({[e.target.name]: e.target.value});
+    onChange = e => this.setState({ [e.target.name]: e.target.value });
 
-    onFormSubmit = (e) => {
+    onFormSubmit = (dispatch, e) => {
         e.preventDefault();
-        console.log(this.state);
-    }
-
-    render() {
-
         const { name, email, phone } = this.state;
 
+        if (name === "") {
+            this.setState({ errors: { name: "Name is required" } });
+            return;
+        }
+
+        if (email === "") {
+            this.setState({ errors: { email: "Email is required" } });
+            return;
+        }
+
+        if (phone === "") {
+            this.setState({ errors: { phone: "Phone is required" } });
+            return;
+        }
+
+        const newContact = {
+            id: uuid(),
+            name,
+            email,
+            phone
+        };
+
+        dispatch({ type: "Add_Contact", payload: newContact });
+
+        this.setState({
+            name: "",
+            email: "",
+            phone: "",
+            errors: {}
+        });
+    };
+
+    render() {
+        const { name, email, phone, errors } = this.state;
+
         return (
-            <div className="row">
-                <div className="col s12 m6 l4">
-                    <div className="card blue darken-2">
-                        <div className="card-content">
-                            <span className="card-title white-text">Add Contact</span>
-                            <form className="container" onSubmit={this.onFormSubmit} style={{ margin: "0px" }}>
-                                <div className="row">
-                                    <div className="input-field col s12">
-                                        <input id="name" name="name" type="text" placeholder="Name" className="validate white-text" 
-                                        value={name} onChange={this.onChange} />
+            <Consumer>
+                {value => {
+                    const { dispatch } = value;
+                    return (
+                        <div className="row">
+                            <div className="col s12 m6 l4">
+                                <div className="card blue darken-2">
+                                    <div className="card-content">
+                                        <span className="card-title white-text">
+                                            Add Contact
+                                        </span>
+                                        <form
+                                            className="container"
+                                            onSubmit={this.onFormSubmit.bind(
+                                                this,
+                                                dispatch
+                                            )}
+                                            style={{ margin: "0px" }}>
+                                            <TextInputGroup
+                                                name="name"
+                                                placeHolder="Name"
+                                                value={name}
+                                                onChange={this.onChange}
+                                                error={errors.name}
+                                            />
+                                            <TextInputGroup
+                                                name="email"
+                                                type="email"
+                                                placeHolder="Email"
+                                                value={email}
+                                                onChange={this.onChange}
+                                                error={errors.email}
+                                            />
+                                            <TextInputGroup
+                                                name="phone"
+                                                placeHolder="Phone"
+                                                value={phone}
+                                                onChange={this.onChange}
+                                                error={errors.phone}
+                                            />
+                                            <button
+                                                className="btn waves-effect blue darken-4"
+                                                type="submit"
+                                                name="action">
+                                                Submit
+                                            </button>
+                                        </form>
                                     </div>
                                 </div>
-                                <div className="row">
-                                    <div className="input-field col s12">
-                                        <input id="email" name="email" type="email" placeholder="Email" className="validate white-text" 
-                                        value={email} onChange={this.onChange} />
-                                    </div>
-                                </div>
-                                <div className="row">
-                                    <div className="input-field col s12">
-                                        <input id="phone" name="phone" type="text" placeholder="Phone" className="validate white-text" 
-                                        value={phone} onChange={this.onChange} />
-                                    </div>
-                                </div>
-                                <button className="btn waves-effect blue darken-4" type="submit" name="action">Submit</button>
-                                
-                            </form>
+                            </div>
                         </div>
-                    </div>
-                </div>
-            </div>
-        )
+                    );
+                }}
+            </Consumer>
+        );
     }
 }
 
