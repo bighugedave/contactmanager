@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
+import axios from "axios";
 import { Consumer } from "../../context";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
@@ -13,7 +14,10 @@ class Contact extends Component {
     };
 
     onDeleteClick = (id, dispatch) => {
-        dispatch({ type: "Delete_Contact", payload: id });
+        console.log(`Deleting user ${id}`);
+        axios
+            .delete(`https://jsonplaceholder.typicode.com/users/${id}`)
+            .then(dispatch({ type: "Delete_Contact", payload: id }));
     };
 
     render() {
@@ -27,7 +31,7 @@ class Contact extends Component {
 
                     return (
                         <div className="row">
-                            <div className="col s12 m7 l3">
+                            <div className="col s12 m7 l4">
                                 <div className="card blue darken-2">
                                     <div className="card-content white-text">
                                         <span className="card-title">
