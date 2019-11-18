@@ -1,5 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
+import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const Header = props => {
@@ -13,7 +14,7 @@ const Header = props => {
                 </a>
                 <ul id="nav-mobile" className="right hide-on-med-and-down">
                     <li>
-                        <a href="/">
+                        <Link to="/">
                             <FontAwesomeIcon
                                 className="fa-sm"
                                 icon="home"
@@ -24,10 +25,10 @@ const Header = props => {
                                 }}
                             />
                             Home
-                        </a>
+                        </Link>
                     </li>
                     <li>
-                        <a href="/about">
+                        <Link to="/about">
                             <FontAwesomeIcon
                                 className="fa-sm"
                                 icon="question"
@@ -38,10 +39,10 @@ const Header = props => {
                                 }}
                             />
                             About
-                        </a>
+                        </Link>
                     </li>
                     <li>
-                        <a href="/contact/add">
+                        <Link to="/contact/add">
                             <FontAwesomeIcon
                                 className="fa-sm"
                                 icon="plus"
@@ -52,7 +53,7 @@ const Header = props => {
                                 }}
                             />
                             Add Contact
-                        </a>
+                        </Link>
                     </li>
                 </ul>
             </div>

@@ -4,13 +4,27 @@ import TextInputGroup from "../layout/TextInputGroup";
 import axios from "axios";
 import { withRouter } from "react-router-dom";
 
-class AddContact extends Component {
+class EditContact extends Component {
     state = {
         name: "",
         email: "",
         phone: "",
         errors: {}
     };
+
+    async componentDidMount() {
+        const { id } = this.props.match.params;
+        const res = await axios.get(
+            `https://jsonplaceholder.typicode.com/users/${id}`
+        );
+        const contact = res.data;
+
+        this.setState({
+            name: contact.name,
+            email: contact.email,
+            phone: contact.phone
+        });
+    }
 
     onChange = e => this.setState({ [e.target.name]: e.target.value });
 
@@ -33,18 +47,20 @@ class AddContact extends Component {
             return;
         }
 
-        const newContact = {
+        const updContact = {
             name,
             email,
             phone
         };
-
-        const res = await axios.post(
-            "https://jsonplaceholder.typicode.com/users/",
-            newContact
+        const { id } = this.props.match.params;
+        const res = await axios.put(
+            `https://jsonplaceholder.typicode.com/users/${id}`,
+            updContact
         );
-        dispatch({ type: "Add_Contact", payload: res.data });
 
+        dispatch({ type: "Update_Contact", payload: res.data });
+
+        // clear state
         this.setState({
             name: "",
             email: "",
@@ -68,7 +84,7 @@ class AddContact extends Component {
                                 <div className="card blue darken-2">
                                     <div className="card-content">
                                         <span className="card-title white-text">
-                                            Add Contact
+                                            Edit Contact
                                         </span>
                                         <form
                                             className="container"
@@ -103,7 +119,7 @@ class AddContact extends Component {
                                                 className="btn waves-effect blue darken-4"
                                                 type="submit"
                                                 name="action">
-                                                Submit
+                                                Update Contact
                                             </button>
                                         </form>
                                     </div>
@@ -117,4 +133,4 @@ class AddContact extends Component {
     }
 }
 
-export default AddContact;
+export default EditContact;

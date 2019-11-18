@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
+import { Link } from "react-router-dom";
 import axios from "axios";
 import { Consumer } from "../../context";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -13,11 +14,10 @@ class Contact extends Component {
         this.setState({ showContactInfo: !this.state.showContactInfo });
     };
 
-    onDeleteClick = (id, dispatch) => {
+    onDeleteClick = async (id, dispatch) => {
         console.log(`Deleting user ${id}`);
-        axios
-            .delete(`https://jsonplaceholder.typicode.com/users/${id}`)
-            .then(dispatch({ type: "Delete_Contact", payload: id }));
+        await axios.delete(`https://jsonplaceholder.typicode.com/users/${id}`);
+        dispatch({ type: "Delete_Contact", payload: id });
     };
 
     render() {
@@ -61,6 +61,19 @@ class Contact extends Component {
                                                     dispatch
                                                 )}
                                             />
+                                            <Link to={`contact/edit/${id}`}>
+                                                <FontAwesomeIcon
+                                                    icon="pencil-alt"
+                                                    className="fa-sm"
+                                                    style={{
+                                                        cursor: "pointer",
+                                                        color: "white",
+                                                        float: "right",
+                                                        marginTop: "10px",
+                                                        marginRight: "12px"
+                                                    }}
+                                                />
+                                            </Link>
                                         </span>
                                         {showContactInfo ? (
                                             <ul>

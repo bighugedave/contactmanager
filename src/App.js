@@ -2,6 +2,7 @@ import React from "react";
 import Contacts from "./components/contacts/Contacts";
 import Header from "./components/layout/Header";
 import AddContact from "./components/contacts/AddContact";
+import EditContact from "./components/contacts/EditContact";
 import NotFound from "./components/pages/NotFound";
 import { Provider } from "./context";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
@@ -15,10 +16,19 @@ import {
     faQuestion,
     faTimes,
     faPlusCircle,
-    faHome
+    faHome,
+    faPencilAlt
 } from "@fortawesome/free-solid-svg-icons";
 
-library.add(fab, faPlus, faTimes, faPlusCircle, faQuestion, faHome);
+library.add(
+    fab,
+    faPlus,
+    faTimes,
+    faPlusCircle,
+    faQuestion,
+    faHome,
+    faPencilAlt
+);
 
 function App() {
     return (
@@ -34,6 +44,11 @@ function App() {
                             exact
                             path="/contact/add"
                             component={AddContact}
+                        />
+                        <Route
+                            exact
+                            path="/contact/edit/:id"
+                            component={EditContact}
                         />
                         <Route component={NotFound} />
                     </Switch>
